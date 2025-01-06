@@ -1,0 +1,6 @@
+FROM nginx:alpine
+
+COPY malicious-csrf-page.html /usr/share/nginx/html/index.html
+COPY catphotos/ /usr/share/nginx/html/
+
+EXPOSE 80

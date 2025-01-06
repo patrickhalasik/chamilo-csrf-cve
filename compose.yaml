@@ -26,11 +26,16 @@ services:
       - DATABASE_NAME='chamilo'
       - DATABASE_USER='root'
       - DATABASE_PASSWORD='root'
-
     depends_on:
       - db
     networks:
       - chamilo_net
+
+  malicious-csrf-page:
+    image: patrickhalasik/chamilo-malicious-csrf-page:1.11.10
+    container_name: chamilo_malicious_csrf_page
+    ports:
+      - "8082:80"
 
 volumes:
   db_data:
