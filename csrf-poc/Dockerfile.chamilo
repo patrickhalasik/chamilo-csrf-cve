@@ -1,6 +1,6 @@
 FROM php:7.2-apache
 
-# Install necessary packages
+# Installation des packages
 RUN apt-get update && apt-get install -y \
     git \
     libbz2-dev \
@@ -23,14 +23,14 @@ RUN apt-get update && apt-get install -y \
     intl \
     zip pdo_mysql
 
-# Copy Chamilo source code
-COPY . /var/www/html/
+# Code source
+COPY ./. /var/www/html/
 
-# Install Composer and dependencies
+# Installation de composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer install --working-dir=/var/www/html
 
-# Set permissions
+# Permissions
 RUN chown -R www-data:www-data \
     /var/www/html/app \
     /var/www/html/main/default_course_document/images \
@@ -38,11 +38,11 @@ RUN chown -R www-data:www-data \
     /var/www/html/vendor \
     /var/www/html/web
 
-# Configure Apache
-COPY chamilo.conf /etc/apache2/sites-available/000-default.conf
+# Configuration du serveur apache
+COPY csrf-poc/chamilo.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite \
     && service apache2 restart
 
-# Expose ports and set entry point
+# Démarrage serveur
 EXPOSE 80
 CMD ["apache2-foreground"]
