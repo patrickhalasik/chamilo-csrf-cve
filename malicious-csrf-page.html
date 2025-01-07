@@ -46,7 +46,7 @@
       // Partie qui permet de changer le statut de l'utilisateur en admin
       data.append("platform_admin", "1");
 
-      fetch("http://localhost:8091/main/admin/user_edit.php?user_id=3", {
+      fetch("http://localhost:8083/main/admin/user_edit.php?user_id=3", {
         method: "POST",
         body: data,
         credentials: "include",
