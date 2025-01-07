@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - db_data_updated:/var/lib/mysql
-      #- ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - ./dump-updated.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
       - chamilo_net_updated
 
@@ -22,7 +22,7 @@ services:
     volumes:
       - chamilo_data_updated:/var/www/html
     environment:
-      - DATABASE_HOST='db'
+      - DATABASE_HOST='db-updated'
       - DATABASE_NAME='chamilo'
       - DATABASE_USER='root'
       - DATABASE_PASSWORD='root'
