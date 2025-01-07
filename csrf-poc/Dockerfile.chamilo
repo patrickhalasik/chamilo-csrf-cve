@@ -1,0 +1,48 @@
+FROM php:7.2-apache
+
+# Installation des packages
+RUN apt-get update && apt-get install -y \
+    git \
+    libbz2-dev \
+    libcurl4-openssl-dev \
+    libicu-dev \
+    libjpeg-dev \
+    libldap2-dev \
+    libmcrypt-dev \
+    libpng-dev \
+    libpq-dev \
+    libssl-dev \
+    libxml2-dev \
+    libxslt1-dev \
+    libzip-dev \
+    unzip \
+    wget \
+    && apt-get clean \ 
+    && docker-php-ext-install \
+    gd \
+    intl \
+    zip pdo_mysql
+
+# Code source
+COPY ./. /var/www/html/
+
+# Installation de composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer install --working-dir=/var/www/html
+
+# Permissions
+RUN chown -R www-data:www-data \
+    /var/www/html/app \
+    /var/www/html/main/default_course_document/images \
+    /var/www/html/main/lang \
+    /var/www/html/vendor \
+    /var/www/html/web
+
+# Configuration du serveur apache
+COPY csrf-poc/chamilo.conf /etc/apache2/sites-available/000-default.conf
+RUN a2enmod rewrite \
+    && service apache2 restart
+
+# Démarrage serveur
+EXPOSE 80
+CMD ["apache2-foreground"]
