@@ -1,45 +1,45 @@
 services:
-  db:
+  db-updated:
     image: mariadb
-    container_name: chamilo_db
+    container_name: chamilo_db_updated
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: chamilo
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - db_data:/var/lib/mysql
-      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - db_data_updated:/var/lib/mysql
+      #- ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
     networks:
-      - chamilo_net
+      - chamilo_net_updated
 
-  chamilo:
+  chamilo-updated:
     image: patrickhalasik/chamilo-csrf:1.11.12
-    container_name: chamilo_app
+    container_name: chamilo_app_updated
     ports:
-      - "8081:80"
+      - "8083:80"
     volumes:
-      - chamilo_data:/var/www/html
+      - chamilo_data_updated:/var/www/html
     environment:
       - DATABASE_HOST='db'
       - DATABASE_NAME='chamilo'
       - DATABASE_USER='root'
       - DATABASE_PASSWORD='root'
     depends_on:
-      - db
+      - db-updated
     networks:
-      - chamilo_net
+      - chamilo_net_updated
 
-  malicious-csrf-page:
+  malicious-csrf-page-updated:
     image: patrickhalasik/chamilo-malicious-csrf-page:1.11.12
-    container_name: chamilo_malicious_csrf_page
+    container_name: chamilo_malicious_csrf_page_updated
     ports:
-      - "8082:80"
+      - "8084:80"
 
 volumes:
-  db_data:
-  chamilo_data:
+  db_data_updated:
+  chamilo_data_updated:
 
 networks:
-  chamilo_net:
+  chamilo_net_updated:
