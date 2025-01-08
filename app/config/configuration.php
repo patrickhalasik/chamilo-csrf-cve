@@ -27,7 +27,7 @@
  * Database connection settings.
  */
 // Database host
-$_configuration['db_host'] = 'db-updated';
+$_configuration['db_host'] = 'db';
 // Database port
 $_configuration['db_port'] = '3306';
 // Database name
@@ -43,7 +43,7 @@ $_configuration['db_manager_enabled'] = false;
  * Directory settings.
  */
 // URL to the root of your Chamilo installation, e.g.: http://www.mychamilo.com/
-$_configuration['root_web'] = 'http://localhost:8083/';
+$_configuration['root_web'] = 'http://localhost:8081/';
 
 // Path to the webroot of system, example: /var/www/
 $_configuration['root_sys'] = '/var/www/html/';
